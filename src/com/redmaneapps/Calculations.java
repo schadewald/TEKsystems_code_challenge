@@ -52,7 +52,7 @@ public class Calculations {
                     setContractSalaries(salary);
         }
     }
-    public void CalculateTotalSalaries()
+    private void CalculateTotalSalaries()
     {
         setTotalSalaries(getFullTimeSalaries(), getPartTimeSalaries(), getContractSalaries());
     }
