@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SalaryCalculations {
+    private static String userFileName;
 
     public static void main(String[] args) throws Exception
     {
         FileExtensionCheck checker = new FileExtensionCheck();
-        List<String> fullTimeEmployeeRecords = new ArrayList<>();
-        List<String> partTimeEmployeeRecords = new ArrayList<>();
-        List<String> contractEmployeeRecords = new ArrayList<>();
+        ParseFile parser = new ParseFile();
+        List<String> fullTimeEmployeeRecords;
+        List<String> partTimeEmployeeRecords;
+        List<String> contractEmployeeRecords;
         int totalSalary = 0;
         int roleSalary = 0;
 
@@ -20,46 +22,55 @@ public class SalaryCalculations {
         {
             Scanner userInput = new Scanner(System.in);
             System.out.println("Please enter filename: ");
-            String userFileName = checker.ExtensionCheck(userInput.nextLine());
+            userFileName = checker.ExtensionCheck(userInput.nextLine());
             System.out.println("Opening " + userFileName);
-            Scanner scanner = new Scanner(new File("src/com/redmaneapps/" + userFileName));     //File location on my machine
-            scanner.useDelimiter(",");
 
-            while (scanner.hasNext())
-            {
-                String line = scanner.nextLine();
-                if (line.contains("FULL"))
-                {
-                    fullTimeEmployeeRecords.add(line);
-                    List<String> fullTimeList = Arrays.asList(line.split(","));
-                    int rate = Integer.parseInt(fullTimeList.get(1));
-                    int hours = Integer.parseInt(fullTimeList.get(2));
-                    int salary = hours * rate;
-                    if (salary > 50000)
-                    {
-                        salary = 50000;
-                    }
-                    totalSalary += salary;
-                }
-                else if (line.contains("PART"))
-                {
-                    partTimeEmployeeRecords.add(line);
-                    List<String> partTimeList = Arrays.asList(line.split(","));
-                    int rate = Integer.parseInt(partTimeList.get(1));
-                    int hours = Integer.parseInt(partTimeList.get(2));
-                    int salary = hours * rate;
-                    totalSalary += salary;
-                }
-                else if (line.contains("CONTRACT"))
-                {
-                    contractEmployeeRecords.add(line);
-                    List<String> contractTimeList = Arrays.asList(line.split(","));
-                    int rate = Integer.parseInt(contractTimeList.get(1));
-                    int hours = Integer.parseInt(contractTimeList.get(2));
-                    int salary = 10000 + (hours * rate);
-                    totalSalary += salary;
-                }
-            }
+            parser.Parse(userFileName);
+
+            fullTimeEmployeeRecords = parser.getFullTimeEmployees();
+            partTimeEmployeeRecords = parser.getPartTimeEmployees();
+            contractEmployeeRecords = parser.getContractEmployees();
+
+//            Scanner scanner = new Scanner(new File("src/com/redmaneapps/" + userFileName));
+//            scanner.useDelimiter(",");
+//
+//
+//
+//            while (scanner.hasNext())
+//            {
+//                String line = scanner.nextLine();
+//                if (line.contains("FULL"))
+//                {
+//                    fullTimeEmployeeRecords.add(line);
+//                    List<String> fullTimeList = Arrays.asList(line.split(","));
+//                    int rate = Integer.parseInt(fullTimeList.get(1));
+//                    int hours = Integer.parseInt(fullTimeList.get(2));
+//                    int salary = hours * rate;
+//                    if (salary > 50000)
+//                    {
+//                        salary = 50000;
+//                    }
+//                    totalSalary += salary;
+//                }
+//                else if (line.contains("PART"))
+//                {
+//                    partTimeEmployeeRecords.add(line);
+//                    List<String> partTimeList = Arrays.asList(line.split(","));
+//                    int rate = Integer.parseInt(partTimeList.get(1));
+//                    int hours = Integer.parseInt(partTimeList.get(2));
+//                    int salary = hours * rate;
+//                    totalSalary += salary;
+//                }
+//                else if (line.contains("CONTRACT"))
+//                {
+//                    contractEmployeeRecords.add(line);
+//                    List<String> contractTimeList = Arrays.asList(line.split(","));
+//                    int rate = Integer.parseInt(contractTimeList.get(1));
+//                    int hours = Integer.parseInt(contractTimeList.get(2));
+//                    int salary = 10000 + (hours * rate);
+//                    totalSalary += salary;
+//                }
+//            }
 
             System.out.println("Please enter Total or Role");
             String userCalculation = userInput.nextLine();
@@ -115,11 +126,11 @@ public class SalaryCalculations {
                 }
             }
 
-            scanner.close();
+//            scanner.close();
         }
         catch (Exception exception)
         {
-            System.out.println("Threw Exception " + exception);
+            System.out.println("Unable to locate file: " + userFileName);
         }
         finally
         {
