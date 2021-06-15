@@ -9,7 +9,6 @@ public class ParseFile {
     List<String> fullTimeEmployeeRecords = new ArrayList<>();
     List<String> partTimeEmployeeRecords = new ArrayList<>();
     List<String> contractEmployeeRecords = new ArrayList<>();
-//    int totalSalary = 0;
 
     public void Parse(String fileName) throws FileNotFoundException
     {
@@ -21,18 +20,30 @@ public class ParseFile {
             String line = scanner.nextLine();
             if (line.contains("FULL"))
             {
-                fullTimeEmployeeRecords.add(line);
+                setFullTimeEmployeeRecords(line);
             }
             else if (line.contains("PART"))
             {
-                partTimeEmployeeRecords.add(line);
+                setPartTimeEmployeeRecords(line);
             }
             else if (line.contains("CONTRACT"))
             {
-                contractEmployeeRecords.add(line);
+                setContractEmployeeRecords(line);
             }
         }
         scanner.close();
+    }
+    private void setFullTimeEmployeeRecords(String line)
+    {
+        fullTimeEmployeeRecords.add(line);
+    }
+    private void setPartTimeEmployeeRecords(String line)
+    {
+        partTimeEmployeeRecords.add(line);
+    }
+    private void setContractEmployeeRecords(String line)
+    {
+        contractEmployeeRecords.add(line);
     }
     public List<String> getFullTimeEmployees()
     {
@@ -46,27 +57,4 @@ public class ParseFile {
     {
         return contractEmployeeRecords;
     }
-
-//    public void CalculateFullTimeEmployee()
-//    {
-//        for (String line : fullTimeEmployeeRecords)
-//        {
-//
-//        }
-//    }
-//    public void CalculatePartTimeEmployee()
-//    {
-//        for (String line : partTimeEmployeeRecords)
-//        {
-//
-//        }
-//    }
-//    public void CalculateContractEmployee()
-//    {
-//        for (String line : contractEmployeeRecords)
-//        {
-//
-//        }
-//    }
-
 }
