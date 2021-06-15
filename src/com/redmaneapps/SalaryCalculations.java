@@ -9,6 +9,7 @@ public class SalaryCalculations {
 
     public static void main(String[] args) throws Exception
     {
+        FileExtensionCheck checker = new FileExtensionCheck();
         List<String> fullTimeEmployeeRecords = new ArrayList<>();
         List<String> partTimeEmployeeRecords = new ArrayList<>();
         List<String> contractEmployeeRecords = new ArrayList<>();
@@ -18,8 +19,8 @@ public class SalaryCalculations {
         try
         {
             Scanner userInput = new Scanner(System.in);
-            System.out.println("Please enter csv input filename: ");    //Must include .csv in filename
-            String userFileName = userInput.nextLine();
+            System.out.println("Please enter filename: ");
+            String userFileName = checker.ExtensionCheck(userInput.nextLine());
             System.out.println("Opening " + userFileName);
             Scanner scanner = new Scanner(new File("src/com/redmaneapps/" + userFileName));     //File location on my machine
             scanner.useDelimiter(",");
